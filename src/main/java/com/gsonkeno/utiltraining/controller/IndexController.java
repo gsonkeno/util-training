@@ -1,11 +1,10 @@
 package com.gsonkeno.utiltraining.controller;
 
-import org.springframework.util.Assert;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.AssertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +15,12 @@ import java.util.Map;
  */
 @RestController
 public class IndexController {
+    private static final Log log = LogFactory.getLog(IndexController.class);
 
     @RequestMapping(name = "/index")
     public Map<String,Object> index(String q,String city){
 
+        log.info("q: " + q + " , city: " + city);
         System.out.println("q对象是否为空?" + (null == q));
         System.out.println("city对象是否为空?" + (null == city));
         Map<String,Object> map = new HashMap<>();
