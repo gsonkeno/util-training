@@ -21,7 +21,7 @@ public class httpUtilsTest {
         params.put("q","美丽 新世界");
         params.put("city","美丽&世界");
 
-        String result = HttpUtils.get("http://127.0.0.1:8080/index", params,
+        HttpUtils.get("http://127.0.0.1:8080/testGet", params,
                 5000, 5000);
     }
 
@@ -42,5 +42,17 @@ public class httpUtilsTest {
         sb.append(URLEncodedUtils.format(nameValuePairs, Charset.forName("UTF-8")));
 
         System.out.println(sb.toString());
+    }
+
+    @Test
+    public void testPost(){
+        String url = "http://127.0.0.1:8080/testPost";
+        Map<String,Object> params = new HashMap<>();
+
+        String json = "{\"q\":\"呵呵\",\"name\":\"哈哈\" }";
+        HttpUtils.post(url, json, 5000, 5000);
+
+        String info = "q=呵呵&name=哈哈";
+        HttpUtils.post(url, info, 5000, 5000);
     }
 }

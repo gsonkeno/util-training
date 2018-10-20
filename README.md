@@ -2,3 +2,6 @@
 自己总结的常用的工具类，供大家参考。
 
 ## http请求
+- HttpUtils.java
+封装了get请求与post请求的方式，使用的是第三方库httpclient.jar。
+也提供了controller和测试用例进行验证

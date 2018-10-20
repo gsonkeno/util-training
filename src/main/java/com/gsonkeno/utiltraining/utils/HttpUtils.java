@@ -10,9 +10,12 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -66,4 +69,36 @@ public class HttpUtils {
 
         return result;
     }
+
+    public static String post(String url,  String params, int socketTimeout, int connectTimeout){
+        CloseableHttpResponse response = null;
+        String result = null;
+        CloseableHttpClient client = null;
+        try {
+            client= HttpClients.custom().setRetryHandler(
+                    new DefaultHttpRequestRetryHandler(3, true)).build();
+            HttpPost post = new HttpPost(url);
+            HttpEntity entity = new StringEntity(params, Charset.forName("UTF-8"));
+            post.setEntity(entity);
+
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(socketTimeout).
+                    setConnectTimeout(connectTimeout).build();
+            post.setConfig(requestConfig);
+
+            response = client.execute(post);
+            entity = response.getEntity();
+            result = EntityUtils.toString(entity);
+
+            log.info( url + params + " 搜索结果: " + result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            HttpClientUtils.closeQuietly(response);
+            HttpClientUtils.closeQuietly(client);
+        }
+
+        return result;
+    }
+
+
 }
