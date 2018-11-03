@@ -15,5 +15,7 @@ public class CharMatcherTest {
 
         System.out.println(CharMatcher.anyOf("baim").matchesAllOf("www.baidu.com"));
 
+        System.out.println(CharMatcher.anyOf("172bgdfa").trimFrom("abcdefg"));
+
     }
 }
