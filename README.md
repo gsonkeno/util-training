@@ -7,4 +7,5 @@
 也提供了controller和测试用例进行验证
 
 - [PriorityQueue.java](https://github.com/gsonkeno/util-training/blob/master/src/main/java/com/gsonkeno/utiltraining/utils/PriorityQueue.java)
-区别于jdk提供的PriorityQueue(可以自动扩展),该类摘自Lucene，是定长的。而且数据结构封装的更加灵活，如调整堆顶
+区别于jdk提供的PriorityQueue(可以自动扩展),该类摘自Lucene，是定长的。而且数据结构封装的更加灵活，如调整堆顶。
+参考文章[Lucene学习笔记之-核心数据结构PriorityQueue的实现原理](http://blog.51cto.com/sbp810050504/2339466)
