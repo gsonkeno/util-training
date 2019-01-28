@@ -16,6 +16,11 @@ import java.util.NoSuchElementException;
 public abstract class PriorityQueue<T> implements Iterable<T> {
     private int size = 0;
     private final int maxSize;
+    /**
+     * heap[0]位空置不用。
+     * heap[1]为根节点。
+     * heap[2～3]为第二层，heap[4～7] 为第三层 ... heap[2^(n-1) ～ 2^n-1]为第n层
+     */
     private final T[] heap;
 
     public PriorityQueue(int maxSize) {
@@ -147,8 +152,11 @@ public abstract class PriorityQueue<T> implements Iterable<T> {
         return heap[1];
     }
 
-    /** Removes and returns the least element of the PriorityQueue in log(size)
-     time. */
+    /** Removes and returns the least element of the PriorityQueue in log(size)time.
+     * 两步走: s1: 用数组尾巴上的元素覆盖跟节点元素。
+     *         s2: 由于这个元素是否能胜任根节点这个位置还不确定，因此需要跟两个子节点比较，调整位置。这里有丝下沉的感觉。即想象把铁球丢入水中，自己就沉了下去
+     *
+     * */
     public final T pop() {
         if (size > 0) {
             T result = heap[1];       // save first value
@@ -230,6 +238,11 @@ public abstract class PriorityQueue<T> implements Iterable<T> {
         return false;
     }
 
+    /**
+     * 插入的数据放在末尾，但是可能比父节点小，所以递归地跟其父节点比较，换位置即可，这里有点冒泡的感觉。即想象把乒乓球按入水中，松手后就会上浮
+     * @param origPos
+     * @return
+     */
     private final boolean upHeap(int origPos) {
         int i = origPos;
         T node = heap[i];          // save bottom node
